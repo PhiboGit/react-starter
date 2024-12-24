@@ -8,6 +8,7 @@ import checkFile from 'eslint-plugin-check-file';
 import importPlugin from 'eslint-plugin-import';
 import reactPlugin from 'eslint-plugin-react';
 import boundaries from 'eslint-plugin-boundaries';
+import tailwind from "eslint-plugin-tailwindcss";
 
 export default tseslint.config(
   js.configs.recommended, // copy eslint recommended rules
@@ -15,7 +16,8 @@ export default tseslint.config(
   importPlugin.flatConfigs.recommended, // https://www.npmjs.com/package/eslint-plugin-import
   reactPlugin.configs.flat.recommended, // https://www.npmjs.com/package/eslint-plugin-react
   reactPlugin.configs.flat['jsx-runtime'], // Add this if you are using React 17+
-  { ignores: ['node_modules', 'dist', '*.config.js', '*.config.ts'] }, // ignore linting files
+  ...tailwind.configs["flat/recommended"],
+  { ignores: ['node_modules', 'dist', '*.config.{js,cjs,ts}'] }, // ignore linting files
   {
     // typescript parser; https://typescript-eslint.io/getting-started/typed-linting/
     languageOptions: {
@@ -46,11 +48,14 @@ export default tseslint.config(
     rules: {
       'react-compiler/react-compiler': 'error',
       ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
       'react/hook-use-state': ['warn'],
+      'react/prop-types': 'off', // https://github.com/shadcn-ui/ui/issues/120#issuecomment-1868274325
+      "@typescript-eslint/restrict-template-expressions": [
+        "error",
+        {
+          "allowNumber": true
+        }
+      ],
       
       'import/order': [
           'error',
@@ -85,6 +90,7 @@ export default tseslint.config(
             'src/assets/**/*',
             'src/components/**/*',
             'src/hooks/**/*',
+            'src/lib/**/*',
             'src/types/**/*',
             'src/utils/**/*',
           ]

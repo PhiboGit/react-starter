@@ -4,5 +4,6 @@
     "esbenp.prettier-vscode",
     "dsznajder.es7-react-js-snippets",
     "bradlc.vscode-tailwindcss",
+    "naumovs.color-highlight",
   ]
 }
